@@ -44,7 +44,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    roles = models.ManyToManyField(Role, null=True, blank=True)
+    roles = models.ManyToManyField(Role, blank=True)
     email = models.EmailField(max_length=200, unique=True, verbose_name='email')
     first_name = models.CharField(max_length=100, verbose_name="First Name")
     last_name = models.CharField(max_length=100, verbose_name="Last Name")

@@ -3,7 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
-from Django_BlogWithPermission.settings import AUTH_USER_MODEL
+from App_Project.settings import AUTH_USER_MODEL
 
 
 class Category(models.Model):

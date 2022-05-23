@@ -14,7 +14,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from Django_BlogWithPermission.settings import AUTH_USER_MODEL
+from App_Project.settings import AUTH_USER_MODEL
 from author.models import User
 from author.models.user_model import Profile
 from author.serializers import ChangePasswordSerializer, ProfileSerializer, AuthorSerializer

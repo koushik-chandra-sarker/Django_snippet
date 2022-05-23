@@ -8,7 +8,7 @@ from django.views import generic
 from rest_framework import viewsets, generics
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, DjangoObjectPermissions, DjangoModelPermissions
 
-from Django_BlogWithPermission.permissions import IsOwner, IsSuperuser, CustomModelPermissions
+from App_Project.permissions import IsOwner, IsSuperuser, CustomModelPermissions
 from blog.models.post_model import Post
 from blog.serializers import PostSerializer
 

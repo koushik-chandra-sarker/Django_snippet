@@ -11,7 +11,7 @@ from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
 
-from Django_BlogWithPermission.settings import AUTH_USER_MODEL
+from App_Project.settings import AUTH_USER_MODEL
 from blog.models.category_model import Category
 
 STATUS_CHOICES = (

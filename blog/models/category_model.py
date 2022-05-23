@@ -3,6 +3,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from Django_BlogWithPermission.settings import AUTH_USER_MODEL
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -12,7 +14,7 @@ class Category(models.Model):
     approval_status = models.PositiveSmallIntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('name',)
@@ -26,6 +28,6 @@ class Category(models.Model):
         self.slug = slugify(self.name, allow_unicode=True)
         super(Category, self).save(*args, **kwargs)
 
-    # def get_absolute_url(self):
-    #     return reverse('blog:category_posts',
-    #                    kwargs={'slug': self.slug})
+    def get_absolute_url(self):
+        return reverse('blog:category_posts',
+                       kwargs={'slug': self.slug})

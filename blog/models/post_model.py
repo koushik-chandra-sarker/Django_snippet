@@ -11,6 +11,7 @@ from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
 
+from Django_BlogWithPermission.settings import AUTH_USER_MODEL
 from blog.models.category_model import Category
 
 STATUS_CHOICES = (
@@ -24,7 +25,7 @@ class Post(models.Model):
     image = models.ImageField(default='article-default.jpg',
                               upload_to='post_images')
     content = RichTextUploadingField(blank=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
                                  related_name='articles')
     publish_date = models.DateTimeField(default=timezone.now)

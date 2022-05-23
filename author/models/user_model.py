@@ -12,15 +12,19 @@ from author.models.role_model import Role
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, password=None):
+    def create_user(self, email, username, first_name, last_name, password=None):
         if not email:
             raise ValueError("User must have an email")
+        if not username:
+            raise ValueError("User must have an username")
         email = email.lower()
+        username = username.title()
         first_name = first_name.title()
         last_name = last_name.title()
 
         user = self.model(
             email=self.normalize_email(email),
+            username=username,
             first_name=first_name,
             last_name=last_name
 
@@ -30,9 +34,10 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, first_name, last_name, password=None):
+    def create_superuser(self, email, username, first_name, last_name, password=None):
         user = self.create_user(
             email=email,
+            username=username,
             first_name=first_name,
             last_name=last_name,
             password=password
@@ -46,6 +51,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     roles = models.ManyToManyField(Role, blank=True)
     email = models.EmailField(max_length=200, unique=True, verbose_name='email')
+    username = models.CharField(max_length=200, unique=True, verbose_name='username', null=False, blank=False)
     first_name = models.CharField(max_length=100, verbose_name="First Name")
     last_name = models.CharField(max_length=100, verbose_name="Last Name")
     is_active = models.BooleanField(default=True)
@@ -68,7 +74,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     #
     # def has_module_perms(self, app_label):
     #     return self.is_superuser
-
 
     class Meta:
         verbose_name_plural = 'Users'

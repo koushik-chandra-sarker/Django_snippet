@@ -8,12 +8,19 @@ User = get_user_model()
 
 
 class UserCreationForm(forms.ModelForm):
-    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput)
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput, help_text="Password is required.")
+    password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput,
+                                help_text="Confirm password is required.")
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('email', 'username', 'first_name', 'last_name', 'password1', 'password2')
+        help_texts = {
+            'email': "Email is required and must be unique.",
+            'username': 'Username is required and must be unique.',
+            'first_name': 'First name is required.',
+            'last_name': 'Last name is required.'
+        }
 
     def clean_password2(self):
         pass1 = self.cleaned_data.get('password1')
@@ -36,7 +43,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'password', 'is_active', 'is_staff', 'is_superuser')
+        fields = ('email', 'username', 'first_name', 'last_name', 'password', 'is_active', 'is_staff', 'is_superuser')
 
     def clean_password(self):
         return self.initial['password']

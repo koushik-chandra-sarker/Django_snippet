@@ -17,12 +17,12 @@ class RoleAdmin(admin.ModelAdmin):
 class UserAdmin(BaseUserAdmin):
     add_form = UserCreationForm
     form = UserChangeForm
-    list_display = ['email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser']
+    list_display = ['email', 'username', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser']
     list_filter = ['is_superuser']
     fieldsets = (
         (
             None, {
-                'fields': ('email', 'first_name', 'last_name', 'password')
+                'fields': ('email', 'username', 'first_name', 'last_name', 'password')
             }
         ),
         (
@@ -43,12 +43,12 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (
             None, {
-                'fields': ('email', 'first_name', 'last_name', 'is_active', 'password1', 'password2')
+                'fields': ('email', 'username', 'first_name', 'last_name', 'is_active', 'password1', 'password2')
             }
         ),
         (
             "Permission", {
-                'fields': ('is_active', 'is_superuser', 'is_staff')
+                'fields': ('is_superuser', 'is_staff')
             }
         ),
     )

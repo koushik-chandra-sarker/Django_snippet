@@ -11,6 +11,7 @@ from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
 
+from App_Project.customBase import CustomModel
 from App_Project.settings import AUTH_USER_MODEL
 from blog.models.category_model import Category
 
@@ -20,7 +21,7 @@ STATUS_CHOICES = (
 )
 
 
-class Post(models.Model):
+class Post(CustomModel):
     title = models.CharField(max_length=100, null=False)
     image = models.ImageField(default='article-default.jpg',
                               upload_to='post_images')

@@ -18,7 +18,7 @@ from django.conf import settings
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-^o_7)w_qju$q69-*#jxsrgubei^xui*nur#0$_#hf=wpdc$h@v'
-
+SITE_URL = "http://127.0.0.1:8000"
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'taggit',
     "rest_framework",
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
     "corsheaders",
 ]
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'App_Project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,10 +100,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
+        # 'rest_framework.permissions.IsAuthenticated',
     ]
 }
 LANGUAGE_CODE = 'en-us'

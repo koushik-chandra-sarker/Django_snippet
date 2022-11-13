@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from App_Project.utils import send_mail, send_html_mail
 from author.models.role_model import Role
 
 
@@ -160,3 +161,4 @@ def create_user_email_confirmation(sender, instance, created, **kwargs):
         activation_key = hashlib.sha224(user_encoded).hexdigest()
         email_confirm_instance.activation_key = activation_key
         email_confirm_instance.save()
+        send_html_mail(instance.email, "/author/verify-mail/?token=" + activation_key, "test url", "Confirm Email")

@@ -2,11 +2,12 @@ import json
 
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.core import serializers
+from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import status
-from rest_framework.generics import UpdateAPIView
+from rest_framework.generics import UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -16,8 +17,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from App_Project.settings import AUTH_USER_MODEL
 from author.models import User
-from author.models.user_model import Profile
-from author.serializers import ChangePasswordSerializer, ProfileSerializer, AuthorSerializer
+from author.models.user_model import Profile, EmailConfirmed
+from author.serializers import ChangePasswordSerializer, ProfileSerializer, AuthorSerializer, VarifyEmailSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -58,3 +59,21 @@ class ChangePasswordView(UpdateAPIView):
         # # return new token
         # return Response({'token': token.key}, status=status.HTTP_200_OK)
         return Response({'message': "Password update successful"}, status=status.HTTP_200_OK)
+
+
+def varify_mail_address(request):
+    activation_key = request.GET.get('token')
+    data = EmailConfirmed.objects.get(activation_key=activation_key)
+    print(data)
+    if data:
+        if data.email_confirm:
+            return render(request, template_name='email_confirmed.html',
+                          context={'messageType': 1, 'message': 'Email already confirmed'})
+        else:
+            data.email_confirm = True
+            data.save()
+            return render(request, template_name='email_confirmed.html',
+                          context={'messageType': 0, 'message': 'Email Verified Successfully'})
+    else:
+        return render(request, template_name='email_confirmed.html',
+                      context={'messageType': -1, 'message': 'Email Verification Failed'})

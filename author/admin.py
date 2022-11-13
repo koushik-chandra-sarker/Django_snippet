@@ -2,6 +2,8 @@ from django.contrib import admin
 
 # Register your models here.
 from author.form import UserCreationForm, UserChangeForm
+from author.forms import MailInfoForm
+from author.models.mail_model import MailInfo
 from author.models.role_model import Role
 from author.models.user_model import Profile, User, EmailConfirmed
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
@@ -58,7 +60,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 @admin.register(EmailConfirmed)
-class EmailConfirmedAdmin(BaseUserAdmin):
+class EmailConfirmedAdmin(admin.ModelAdmin):
     list_display = ['user', 'first_name', 'last_name', 'activation_key', 'email_confirm', 'created_at']
 
     def first_name(self, obj):
@@ -77,3 +79,9 @@ class EmailConfirmedAdmin(BaseUserAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(MailInfo)
+class MailInfoAdmin(admin.ModelAdmin):
+    list_display = ["id", "active", 'host', 'port', 'tls', 'ssl', 'mail']
+    list_editable = ["active", 'host', 'port', 'tls', 'ssl', 'mail']
+    forms = MailInfoForm

@@ -32,4 +32,4 @@ class SinglePostApi(generics.RetrieveAPIView):
 class PostApi(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [DjangoModelPermissions ]
+    # permission_classes = [DjangoModelPermissions ]
